@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.I.A. | DOSSIER SANTOS</title>
+    <title>S.I.A. | AGENTE SANTOS</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
-        /* Importación simulada de Zuume Rough Bold vía estilo */
         @font-face {
             font-family: 'Zuume Rough';
             src: local('Zuume Rough Bold'), local('Zuume-Rough-Bold');
@@ -53,7 +52,6 @@
             box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
 
-        /* Sellos */
         .confidential-stamp {
             position: absolute; top: 50px; right: 50px;
             border: 4px solid var(--red-stamp); color: var(--red-stamp);
@@ -64,8 +62,7 @@
         header { border-bottom: 4px double var(--ink); margin-bottom: 40px; padding-bottom: 10px; }
         h1 { font-family: var(--font-title); font-size: 5rem; line-height: 0.8; }
         
-        /* Navegación */
-        nav { display: flex; gap: 10px; margin-bottom: 50px; }
+        nav { display: flex; gap: 10px; margin-bottom: 50px; flex-wrap: wrap; }
         .nav-tab {
             background: #b5a585; border: none; padding: 12px 25px;
             font-family: var(--font-main); font-size: 1.4rem; cursor: pointer;
@@ -77,7 +74,7 @@
         .section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* --- PERFIL DETALLADO --- */
+        /* --- PERFIL --- */
         .profile-container { display: grid; grid-template-columns: 320px 1fr; gap: 40px; }
         .profile-photo {
             border: 15px solid #fff; box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
@@ -88,58 +85,56 @@
         .data-line { border-bottom: 1px solid rgba(0,0,0,0.1); padding: 8px 0; font-size: 1.2rem; }
         .data-line b { color: #555; margin-right: 10px; }
 
-        /* --- HISTORIAL (CRONOLOGÍA) --- */
+        /* --- GALERÍA MIXTA (FOTOS Y VIDEOS) --- */
         .timeline { border-left: 2px solid var(--ink); padding-left: 30px; }
         .mission-box { margin-bottom: 60px; position: relative; }
         .mission-box::before {
             content: ''; position: absolute; left: -37px; top: 10px;
             width: 12px; height: 12px; background: var(--ink); border-radius: 50%;
         }
-        .mission-box h3 { font-size: 2.2rem; background: rgba(0,0,0,0.05); padding: 5px 10px; }
-        .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-top: 20px; }
-        .photo-item { 
+        .mission-box h3 { font-size: 2.2rem; background: rgba(0,0,0,0.05); padding: 5px 10px; margin-bottom: 20px; }
+        
+        .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+        
+        .media-item { 
             background: #fff; padding: 10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); 
             position: relative; transition: 0.3s;
         }
-        .photo-item::after {
+        .media-item::after {
             content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-            width: 50px; height: 15px; background: rgba(210,190,140,0.4); /* Cinta */
+            width: 50px; height: 15px; background: rgba(210,190,140,0.4);
         }
-        .photo-item img { width: 100%; aspect-ratio: 1; object-fit: cover; filter: grayscale(1); }
-        .photo-item:hover { transform: scale(1.1) rotate(0deg); z-index: 5; }
-        .photo-item:hover img { filter: grayscale(0); }
+        .media-item img, .media-item video { 
+            width: 100%; aspect-ratio: 1; object-fit: cover; filter: grayscale(1); 
+        }
+        .media-item:hover { transform: scale(1.05) rotate(0deg); z-index: 5; }
+        .media-item:hover img, .media-item:hover video { filter: grayscale(0); }
 
-        /* --- SAN VALENTIN --- */
+        /* --- REPORTES Y MODAL --- */
         .typica-report {
             background: #fff; padding: 50px; border: 1px solid #ccc;
-            background-image: repeating-linear-gradient(#fff, #fff 31px, #e5e5e5 31px, #e5e5e5 32px); /* Hojas de cuaderno */
+            background-image: repeating-linear-gradient(#fff, #fff 31px, #e5e5e5 31px, #e5e5e5 32px);
             line-height: 32px; font-size: 1.4rem;
         }
 
-        /* --- NUEVO CASO 0-8 --- */
         .case-summary { border: 4px solid var(--ink); padding: 40px; text-align: center; }
         .accept-btn {
             background: var(--red-stamp); color: white; border: none;
             padding: 20px 50px; font-family: var(--font-title); font-size: 2.5rem;
             cursor: pointer; transition: 0.4s; margin-top: 30px;
         }
-        .accept-btn:hover { background: #000; letter-spacing: 5px; }
 
-        /* --- MENSAJE EMERGENTE (MODAL) --- */
         #meeting-modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9);
             display: none; justify-content: center; align-items: center; z-index: 11000;
         }
         .modal-content {
-            background: #1a1a1a; color: #00ff00; /* Estilo terminal */
+            background: #1a1a1a; color: #00ff00;
             padding: 40px; border: 2px solid #00ff00; font-family: monospace;
             max-width: 500px; width: 90%; text-align: center;
             box-shadow: 0 0 30px #00ff00;
         }
-        .modal-content h2 { font-family: var(--font-title); color: #00ff00; font-size: 2.5rem; margin-bottom: 20px; }
-        .modal-content p { font-size: 1.2rem; margin-bottom: 15px; }
 
-        /* PLAYER */
         .audio-fix { position: fixed; bottom: 20px; left: 20px; background: var(--ink); color: #fff; padding: 10px; font-size: 0.8rem; z-index: 900; }
 
         @media (max-width: 768px) {
@@ -171,7 +166,7 @@
 
     <nav>
         <button class="nav-tab active" onclick="tab(event, 'p1')">PERFIL AGENTE</button>
-        <button class="nav-tab" onclick="tab(event, 'p2')">HISTORIAL EVIDENCIAS</button>
+        <button class="nav-tab" onclick="tab(event, 'p2')">HISTORIAL DE MISIONES</button>
         <button class="nav-tab" onclick="tab(event, 'p3')">ULTIMA MISION</button>
         <button class="nav-tab" onclick="tab(event, 'p4')">NUEVA MISIÓN</button>
     </nav>
@@ -179,7 +174,7 @@
     <section id="p1" class="section active">
         <div class="profile-container">
             <div class="profile-photo">
-                <img src="Ilsen_1.jpg" alt="Agente Santos">
+                <img src="Ilsen_1.png" alt="Agente Santos">
             </div>
             <div class="profile-data">
                 <h2>ILSEN MILENKA SANTOS VILLCA</h2>
@@ -198,35 +193,51 @@
 
     <section id="p2" class="section">
         <div class="timeline">
-            <div class="mission-box">
-                <h3>MISIÓN: IMPOSICIÓN DE BATA</h3>
-                <div class="photo-grid"><script>for(let i=1; i<=7; i++) document.write(`<div class="photo-item"><img src="bata_${i}.jpg"></div>`);</script></div>
-            </div>
-            <div class="mission-box">
-                <h3>MISIÓN: PIPIRIPI</h3>
-                <div class="photo-grid"><script>for(let i=1; i<=9; i++) document.write(`<div class="photo-item"><img src="Pipiripi_${i}.jpg"></div>`);</script></div>
-            </div>
-            <div class="mission-box">
-                <h3>MISIÓN: CUMPLEAÑOS</h3>
-                <div class="photo-grid"><script>for(let i=1; i<=16; i++) document.write(`<div class="photo-item"><img src="Cumple_${i}.jpg"></div>`);</script></div>
-            </div>
+            
             <div class="mission-box">
                 <h3>MISIÓN: CHIMUELO</h3>
-                <div class="photo-grid"><script>for(let i=1; i<=9; i++) document.write(`<div class="photo-item"><img src="Chimuelo_${i}.jpg"></div>`);</script></div>
+                <div class="photo-grid">
+                    <div class="media-item"><video src="Chimuelo_1.mp4" loop muted onmouseover="this.play()" onmouseout="this.pause()"></video></div>
+                    <script>for(let i=2; i<=9; i++) document.write(`<div class="media-item"><img src="Chimuelo_${i}.jpg"></div>`);</script>
+                </div>
             </div>
+
+            <div class="mission-box">
+                <h3>MISIÓN: CUMPLEAÑOS</h3>
+                <div class="photo-grid">
+                    <div class="media-item"><video src="Cumple_1.mp4" loop muted onmouseover="this.play()" onmouseout="this.pause()"></video></div>
+                    <script>for(let i=2; i<=16; i++) document.write(`<div class="media-item"><img src="Cumple_${i}.jpg"></div>`);</script>
+                </div>
+            </div>
+
+            <div class="mission-box">
+                <h3>MISIÓN: PIPIRIPI</h3>
+                <div class="photo-grid">
+                    <div class="media-item"><video src="Pipiripi_1.mp4" loop muted onmouseover="this.play()" onmouseout="this.pause()"></video></div>
+                    <script>for(let i=2; i<=9; i++) document.write(`<div class="media-item"><img src="Pipiripi_${i}.jpg"></div>`);</script>
+                </div>
+            </div>
+
+            <div class="mission-box">
+                <h3>MISIÓN: IMPOSICIÓN DE BATA</h3>
+                <div class="photo-grid"><script>for(let i=1; i<=7; i++) document.write(`<div class="media-item"><img src="bata_${i}.jpg"></div>`);</script></div>
+            </div>
+
             <div class="mission-box">
                 <h3>MISIÓN: STITCH</h3>
-                <div class="photo-grid"><script>for(let i=1; i<=3; i++) document.write(`<div class="photo-item"><img src="Stitch_${i}.jpg"></div>`);</script></div>
+                <div class="photo-grid"><script>for(let i=1; i<=3; i++) document.write(`<div class="media-item"><img src="Stitch_${i}.jpg"></div>`);</script></div>
             </div>
+
             <div class="mission-box">
                 <h3>MISIÓN: PIZZA</h3>
-                <div class="photo-grid"><script>for(let i=1; i<=9; i++) document.write(`<div class="photo-item"><img src="pizza_${i}.jpg"></div>`);</script></div>
+                <div class="photo-grid"><script>for(let i=1; i<=9; i++) document.write(`<div class="media-item"><img src="pizza_${i}.jpg"></div>`);</script></div>
             </div>
+
             <div class="mission-box">
                 <h3>MISIÓN: MANQA (ORIGEN)</h3>
                 <div class="photo-grid">
-                    <div class="photo-item"><img src="manqa_1.jpg"></div>
-                    <div class="photo-item"><img src="manqa_2.jpg"></div>
+                    <div class="media-item"><img src="manqa_1.jpg"></div>
+                    <div class="media-item"><img src="manqa_2.jpg"></div>
                 </div>
             </div>
         </div>
@@ -238,7 +249,7 @@
             <p>
                 A LAS <strong>17:30 HORAS</strong>, LAS COORDENADAS SE ALINEARON EN EL CAFÉ TYPICA. <br><br>
                 FUE UN ENCUENTRO QUE DESAFÍO EL CALENDARIO ESTÁNDAR; MIENTRAS EL MUNDO CELEBRABA EL 14, NOSOTRAS CONSTRUIMOS NUESTRO PROPIO TIEMPO EL 18. <br><br>
-                LA ATMÓSFERA SE TORNÓ <strong>MÁGICO</strong>. ENTRE EL AROMA A CAFÉ Y LAS MIRADAS COMPLICES, LO BONITO NO FUE EL LUGAR, SINO LA CERTEZA DE ESTAR AHÍ. <br><br>
+                LA ATMÓSFERA SE TORNÓ <strong>MÁGICA</strong>. ENTRE EL AROMA A CAFÉ Y LAS MIRADAS COMPLICES, LO BONITO NO FUE EL LUGAR, SINO LA CERTEZA DE ESTAR AHÍ. <br><br>
                 <strong>ESTADO DEL REPORTE:</strong> MEMORIA INBORRABLE. ÉXITO ABSOLUTO.
             </p>
         </div>
@@ -273,7 +284,7 @@
             <p>AGENTE DE CONTACTO: M</p>
             <p>LUGAR: CANCILLERÍA</p>
         </div>
-        <p>>>> LAS HERRAMIENTAS DE VESTIGACION LA ESPERA, DETECTIVE SANTOS.</p>
+        <p>>>> LAS HERRAMIENTAS DE INVESTIGACIÓN LA ESPERAN, DETECTIVE SANTOS.</p>
         <button onclick="closeModal()" style="background: #00ff00; color: #000; border: none; padding: 10px 20px; font-family: monospace; font-weight: bold; cursor: pointer;">CERRAR TERMINAL</button>
     </div>
 </div>
